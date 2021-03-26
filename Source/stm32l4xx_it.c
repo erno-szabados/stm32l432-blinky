@@ -1,9 +1,9 @@
-/** 
+/**
   ******************************************************************************
-  * @file    GPIO/GPIO_IOToggle/Src/stm32l4xx_it.c
+  * @file    UART/UART_TwoBoards_ComIT/Src/stm32l4xx_it.c 
   * @author  MCD Application Team
   * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and
+  *          This file provides template for all exceptions handler and 
   *          peripherals interrupt service routine.
   ******************************************************************************
   * @attention
@@ -22,12 +22,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32l4xx_it.h"
-
+   
 /** @addtogroup STM32L4xx_HAL_Examples
   * @{
   */
 
-/** @addtogroup GPIO_IOToggle
+/** @addtogroup UART_TwoBoards_ComIT
   * @{
   */
 
@@ -35,7 +35,8 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-
+/* UART handler declared in "main.c" file */
+extern UART_HandleTypeDef UartHandle;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -44,7 +45,7 @@
 /******************************************************************************/
 
 /**
-  * @brief  This function handles NMI exception.
+  * @brief   This function handles NMI exception.
   * @param  None
   * @retval None
   */
@@ -147,6 +148,27 @@ void SysTick_Handler(void)
 /*  available peripheral interrupt handler's name please refer to the startup */
 /*  file (startup_stm32l4xx.s).                                               */
 /******************************************************************************/
+/**
+  * @brief  This function handles UART interrupt request.  
+  * @param  None
+  * @retval None
+  * @Note   This function is redefined in "main.h" and related to DMA  
+  *         used for USART data transmission     
+  */
+void USARTx_IRQHandler(void)
+{
+  HAL_UART_IRQHandler(&UartHandle);
+}
+
+/**
+  * @brief  This function handles external lines 10 to 15 interrupt request.
+  * @param  None
+  * @retval None
+  */
+void EXTI15_10_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_12);
+}
 
 /**
   * @brief  This function handles PPP interrupt request.
@@ -160,7 +182,7 @@ void SysTick_Handler(void)
 
 /**
   * @}
-  */
+  */ 
 
 /**
   * @}
